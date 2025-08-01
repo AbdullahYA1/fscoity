@@ -1,17 +1,21 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Portfolio from './pages/portfolio/Portfolio';  // note the leading './' and capital P
+import Portfolio from './pages/portfolio/portfolio'; 
 
-const Home = () => <Portfolio />;
+const Home = React.lazy(() => import('./pages/home'));
+
 const NotFound = () => <div style={{ color: 'white', padding: '2rem' }}>404 - Page Not Found</div>;
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <React.Suspense fallback={<div style={{ color: 'white', padding: '2rem' }}>Loading...</div>}>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </React.Suspense>
     </Router>
   );
 }
