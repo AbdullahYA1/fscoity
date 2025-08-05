@@ -1,9 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Portfolio from './pages/portfolio/portfolio'; 
-
-const Home = React.lazy(() => import('./pages/home'));
-
+import Home from './pages/home/home';
 const NotFound = () => <div style={{ color: 'white', padding: '2rem' }}>404 - Page Not Found</div>;
 
 function App() {
