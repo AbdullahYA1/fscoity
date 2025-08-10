@@ -1,0 +1,45 @@
+.scroll-to-top {
+  background: linear-gradient(135deg, #00ff41, #00cc33);
+  border: 2px solid #00ff41;
+  color: #000;
+  box-shadow: 0 8px 25px rgba(0, 255, 65, 0.3);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-to-top:hover {
+  background: linear-gradient(135deg, #00cc33, #00ff41);
+  border-color: #00cc33;
+  box-shadow: 0 12px 35px rgba(0, 255, 65, 0.5);
+  transform: translateY(-3px) scale(1.1);
+}
+
+.scroll-to-top:active {
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 255, 65, 0.3);
+}
+
+@keyframes animate-bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: animate-bounce-slow 2s ease-in-out infinite;
+}
+
+/* Ensure button is always visible above other content */
+.scroll-to-top {
+  z-index: 9999;
+}
+
+@media (max-width: 768px) {
+  .scroll-to-top {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.75rem;
+  }
+}

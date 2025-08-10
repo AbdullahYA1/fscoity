@@ -1,0 +1,16 @@
+.grid-overlay {
+  background-image: 
+    linear-gradient(90deg, transparent 98%, #00ff41 100%),
+    linear-gradient(180deg, transparent 98%, #00ff41 100%);
+  background-size: 50px 50px;
+  animation: grid-move 20s linear infinite;
+}
+
+@keyframes grid-move {
+  0% {
+    transform: translateX(0) translateY(0);
+  }
+  100% {
+    transform: translateX(50px) translateY(50px);
+  }
+}

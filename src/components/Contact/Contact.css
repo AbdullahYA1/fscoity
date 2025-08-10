@@ -1,0 +1,99 @@
+.contact-link {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contact-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(0, 255, 65, 0.1) 50%, 
+    transparent 100%);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.contact-link:hover::before {
+  transform: translateX(100%);
+}
+
+.contact-form-container {
+  position: relative;
+  border: 2px solid rgba(0, 255, 65, 0.3);
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.8) 0%, 
+    rgba(0, 255, 65, 0.05) 100%);
+}
+
+.contact-form-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(90deg, transparent 98%, #00ff41 100%),
+    linear-gradient(180deg, transparent 98%, #00ff41 100%);
+  background-size: 25px 25px;
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.contact-input {
+  position: relative;
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(0, 255, 65, 0.3);
+  transition: all 0.5s ease;
+}
+
+.contact-input:focus {
+  border-color: #00ff41;
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+  background: rgba(0, 255, 65, 0.05);
+}
+
+.contact-input::placeholder {
+  color: rgba(0, 255, 65, 0.5);
+}
+
+.contact-submit {
+  position: relative;
+  background: linear-gradient(135deg, #00ff41, #00cc33);
+  border: none;
+  color: #000;
+  font-weight: bold;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+
+.contact-submit:hover {
+  background: linear-gradient(135deg, #00cc33, #00ff41);
+  box-shadow: 0 10px 30px rgba(0, 255, 65, 0.3);
+  transform: translateY(-2px);
+}
+
+@keyframes digital-rain {
+  0% {
+    transform: translateY(-100vh);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.animate-digital-rain {
+  animation: digital-rain linear infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.contact-submit:active {
+  animation: shake 0.5s ease-in-out;
+}

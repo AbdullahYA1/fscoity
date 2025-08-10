@@ -1,0 +1,58 @@
+.footer-section {
+  position: relative;
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    rgba(0, 255, 65, 0.02) 50%, 
+    rgba(0, 0, 0, 0.8) 100%);
+  border-top: 2px solid rgba(0, 255, 65, 0.3);
+}
+
+.footer-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    #00ff41 50%, 
+    transparent 100%);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.footer-quote {
+  position: relative;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.5px;
+}
+
+.footer-quote::before,
+.footer-quote::after {
+  content: '"';
+  color: rgba(0, 255, 65, 0.5);
+  font-size: 1.5em;
+  vertical-align: top;
+}
+
+@keyframes animate-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: animate-fade-in 1s ease-out forwards;
+  opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .footer-quote {
+    font-size: 0.9rem;
+  }
+}

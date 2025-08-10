@@ -1,0 +1,66 @@
+.education-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.education-card {
+  position: relative;
+  transition: all 0.7s ease-in-out;
+}
+
+.education-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 255, 65, 0.1);
+}
+
+.education-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, 
+    rgba(0, 255, 65, 0.1) 0%, 
+    transparent 30%, 
+    transparent 70%, 
+    rgba(0, 188, 212, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.7s ease-in-out;
+}
+
+.education-card:hover::before {
+  opacity: 1;
+}
+
+.identity-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 255, 65, 0.05));
+  border: 2px solid rgba(0, 255, 65, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.identity-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(90deg, transparent 98%, #00ff41 100%),
+    linear-gradient(180deg, transparent 98%, #00ff41 100%);
+  background-size: 20px 20px;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+@keyframes animate-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: animate-fade-up 0.8s ease-out forwards;
+  opacity: 0;
+}

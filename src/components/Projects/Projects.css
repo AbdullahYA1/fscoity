@@ -1,0 +1,31 @@
+/* Projects Section Styles */
+.animate-project-card {
+  animation: projectCard 1s ease-out forwards;
+  opacity: 0;
+  transform: translateY(50px) rotateX(10deg);
+}
+
+@keyframes projectCard {
+  to { opacity: 1; transform: translateY(0) rotateX(0deg); }
+}
+
+.digital-grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.05;
+  transition: opacity 0.7s ease;
+  pointer-events: none;
+}
+
+.group:hover .digital-grid-overlay {
+  opacity: 0.1;
+}
+
+@media (max-width: 768px) {
+  .animate-project-card {
+    animation-delay: 0.1s;
+  }
+}

@@ -9,6 +9,7 @@ function App() {
     <Router>
       <React.Suspense fallback={<div style={{ color: 'white', padding: '2rem' }}>Loading...</div>}>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="*" element={<NotFound />} />

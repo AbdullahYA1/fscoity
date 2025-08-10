@@ -1,0 +1,65 @@
+/* Navigation Styles */
+.mobile-nav-button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: 2px solid #10b981;
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  transition: all 0.3s ease;
+  transform: scale(1);
+  border-radius: 0.5rem;
+  font-weight: 700;
+}
+
+.mobile-nav-button:hover {
+  background: rgba(16, 185, 129, 0.3);
+  color: #86efac;
+  transform: scale(1.05);
+}
+
+/* Mobile Menu Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-menu-enter {
+  animation: mobileMenuSlideDown 0.3s ease-out forwards;
+}
+
+.mobile-menu-exit {
+  animation: mobileMenuSlideUp 0.3s ease-out forwards;
+}
+
+@keyframes mobileMenuSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mobileMenuSlideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
