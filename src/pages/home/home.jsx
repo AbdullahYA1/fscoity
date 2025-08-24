@@ -24,10 +24,7 @@ const Home = () => {
   // Enhanced intro sequence with better ASCII
   const introLines = useMemo(
     () => [
-      "Initializing secure connection...",
-      "Establishing encrypted tunnel...",
-      "Connection established.",
-      "",
+      ...(window.innerWidth >= 768 ? [
       "   ▄████████    ▄████████  ▄██████▄   ▄████████  ▄█     ▄████████    ███        ▄██   ▄   ",
       "  ███    ███   ███    ███ ███    ███ ███    ███ ███    ███    ███ ▀█████████▄   ███   ██▄  ",
       "  ███    ███   ███    █▀  ███    ███ ███    █▀  ███▌   ███    █▀     ▀███▀▀██   ███▄▄▄███  ",
@@ -37,6 +34,10 @@ const Home = () => {
       "  ███    ███    ▄█    ███ ███    ███ ███    ███ ███    ███    ███     ███     ███   ███  ",
       "  ███    █▀   ▄████████▀   ▀██████▀  ████████▀  █▀     ████████▀     ▄████▀    ▀█████▀   ",
       "",
+    ] : []),
+      "Initializing secure connection...",
+      "Establishing encrypted tunnel...",
+      "Connection established.",
       " ╔══════════════════════════════════════════════╗",
       " ║          SYSTEM BREACH DETECTED              ║",
       " ║         TERMINAL ACCESS GRANTED              ║",
@@ -118,7 +119,7 @@ const Home = () => {
     const isAsciiArtLine = currentLine >= asciiStart && currentLine <= asciiEnd;
 
     if (currentChar < currentLineText.length) {
-      const delay = isAsciiArtLine ? 1 : Math.random() * 5 + 5; // 10x faster for ASCII
+      const delay = isAsciiArtLine ? 0.25 : Math.random() * 1.25 + 1.25; // Made 4x faster than original
 
       const timer = setTimeout(() => {
         setDisplayedText((prev) => {
@@ -137,7 +138,7 @@ const Home = () => {
           setCurrentLine((prev) => prev + 1);
           setCurrentChar(0);
         },
-        currentLineText === "" ? 10 : 100
+        currentLineText === "" ? 2.5 : 25 // Made 4x faster than original
       );
 
       return () => clearTimeout(timer);
@@ -193,7 +194,7 @@ const Home = () => {
           return newOutput;
         });
         setCurrentRedirectChar((prev) => prev + 1);
-      }, Math.random() * 20 + 5);
+      }, Math.random() * 5 + 1.25); // Made 4x faster than original
 
       return () => clearTimeout(timer);
     } else {
@@ -202,7 +203,7 @@ const Home = () => {
           setCurrentRedirectLine((prev) => prev + 1);
           setCurrentRedirectChar(0);
         },
-        currentLineText === "" ? 50 : 100
+        currentLineText === "" ? 12.5 : 25 // Made 4x faster than original
       );
 
       return () => clearTimeout(timer);
@@ -312,7 +313,7 @@ const Home = () => {
             <div key={index} className="command-history-item">
               {entry.input !== undefined && (
                 <div className="command-line">
-                  <span className="command-prompt">guest@asoceity:~$ </span>
+                  <span className="command-prompt">root@asoceity:~$ </span>
                   <span className="command-input-text">{entry.input}</span>
                 </div>
               )}

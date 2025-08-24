@@ -88,12 +88,12 @@
 }
 
 @keyframes slideLeft {
-  from { transform: translateX(-100px); opacity: 0; }
+  from { transform: translateX(-50px); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
 }
 
 @keyframes slideRight {
-  from { transform: translateX(100px); opacity: 0; }
+  from { transform: translateX(50px); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
 }
 
@@ -345,5 +345,23 @@ html {
   
   .animate-skill-bar {
     animation-delay: 0.05s;
+  }
+  
+  /* Fix responsive slide animations */
+  @keyframes slideLeft {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  
+  @keyframes slideRight {
+    from { transform: translateX(20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  
+  /* Ensure titles are visible on mobile */
+  .animate-slide-left,
+  .animate-slide-right {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
   }
 }

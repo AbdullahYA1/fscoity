@@ -55,13 +55,6 @@ const Projects = ({ projects }) => {
                     <Github size={18} className="mr-2" />
                     REPO
                   </a>
-                  <a
-                    href={project.demo}
-                    className="flex items-center text-green-400 hover:text-green-300 transition-all duration-500 group-hover:animate-pulse transform hover:scale-110"
-                  >
-                    <ExternalLink size={18} className="mr-2" />
-                    LIVE
-                  </a>
                 </div>
               </div>
 

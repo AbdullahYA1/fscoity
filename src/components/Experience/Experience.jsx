@@ -10,7 +10,7 @@ const Experience = ({ experiences }) => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl md:text-6xl font-bold text-green-300 relative animate-slide-left mb-16 text-center transform hover:scale-105 transition-all duration-500 cursor-default">
-          &gt; Experience_Timeline
+          &gt; Experience
           <div className="absolute -inset-4 bg-gradient-to-r from-green-400/10 to-cyan-400/10 blur-xl animate-pulse" />
         </h2>
 
@@ -98,7 +98,7 @@ const Experience = ({ experiences }) => {
                           Key Responsibilities:
                         </h5>
                         <ul className="space-y-1 md:space-y-2 text-xs md:text-sm text-gray-300 leading-relaxed">
-                          {exp.responsibilities.slice(0, 3).map((resp, i) => (
+                          {exp.responsibilities.map((resp, i) => (
                             <li key={i} className="flex items-start">
                               <span className="text-green-400 mr-2 mt-1 text-xs">
                                 ▶

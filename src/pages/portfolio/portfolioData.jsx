@@ -86,18 +86,17 @@ export const experiencesData = [
   {
     id: 1,
     title: "Backend Engineer",
-    company: "Gathern",
-    location: "Dammam, Saudi Arabia",
+    company: "G",
+    location: "Riyadh, Saudi Arabia",
     period: "02/2025 – present ",
     type: "FULL-TIME",
     responsibilities: [
-      "Designed and maintained a scalable microservices architecture, enabling dynamic fee configuration and modular price filtering across applications",
-      "Built and optimized MongoDB aggregation pipelines to support advanced fee-based search and improve performance of user-facing service queries",
-      "Implemented admin-side controls to dynamically manage payment methods (e.g., Tamara, Tabby, Apple Pay, Credit Cards), enhancing operational flexibility",
-      "Integrated with the JOUD platform, enabling seamless management of Buy Now, Pay Later (BNPL) settings through secure API interactions",
-      "Developed RESTful endpoints to add and update fee settings with input validation, access control, and contract compliance",
+      "Designed and maintained a scalable microservices architecture with dynamic fee models, BNPL integrations, and modular payment management",
+      "Built optimized MongoDB aggregation pipelines and refactored API requests, reducing server load by 70%",
+      "Developed secure RESTful endpoints with validation, access control, and consistent API response handling",
+      "Engineered advanced pagination algorithms, improving performance by 15% and enhancing user-facing queries",
+      "Enabling seamless management of Buy Now, Pay Later (BNPL) settings through secure API interactions",
       "Engineered backend logic for peak hour pricing, supporting time-based dynamic fee models configurable per service",
-      "Ensured consistent API response handling, including correct interpretation of 204 No Content and validation of edge cases from external microservices",
     ],
     technologies: [
       "PHP",
@@ -158,6 +157,7 @@ export const certificatesData = [
     issuer: "JavaScript Institute",
     date: "07-2023",
     type: "Programming",
+    credentialUrl: "https://www.credly.com/badges/a293ccec-d630-4c1e-9a0a-2c0d3c35aa33/linked_in_profile",
   },
   {
     title: "eJPT - eLearnSecurity Junior Penetration Tester",
@@ -165,6 +165,7 @@ export const certificatesData = [
     issuer: "INE Security",
     date: "07/2025",
     type: "Cybersecurity",
+    credentialUrl: "https://certs.ine.com/31f2e165-44bf-446c-8ec0-c7c20b7d3d42#acc.yurqzgtA",
   },
   {
     title: "eWPT - eLearnSecurity Web Application Penetration Tester",
@@ -172,5 +173,6 @@ export const certificatesData = [
     issuer: "INE Security",
     date: "08/2025",
     type: "Cybersecurity",
+    credentialUrl: "https://certs.ine.com/03cf66cd-9d1e-43e5-b208-de432e2fb90c#acc.jRQDPS0z",
   },
 ];

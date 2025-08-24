@@ -1,8 +1,14 @@
 import React from 'react';
-import { Award, Calendar } from 'lucide-react';
+import { Award, Calendar, ExternalLink } from 'lucide-react';
 import './Certificates.css';
 
 const Certificates = ({ certificates }) => {
+  const handleCertificateClick = (credentialUrl) => {
+    if (credentialUrl) {
+      window.open(credentialUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <section
       id="certificates"
@@ -18,8 +24,11 @@ const Certificates = ({ certificates }) => {
           {certificates.map((cert, index) => (
             <div
               key={index}
-              className="group relative backdrop-blur-sm p-6 animate-fade-up certificate-card"
+              className={`group relative backdrop-blur-sm p-6 animate-fade-up certificate-card ${
+                cert.credentialUrl ? 'cursor-pointer' : ''
+              }`}
               style={{ animationDelay: `${index * 0.2}s` }}
+              onClick={() => handleCertificateClick(cert.credentialUrl)}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/10 via-transparent to-green-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
@@ -31,8 +40,14 @@ const Certificates = ({ certificates }) => {
                   />
                   <div className="flex-1">
                     <div className="flex items-center mb-2">
-                      <h3 className="text-xl font-bold text-cyan-300 group-hover:text-cyan-200 transition-colors duration-500">
+                      <h3 className="text-xl font-bold text-cyan-300 group-hover:text-cyan-200 transition-colors duration-500 flex items-center">
                         {cert.title}
+                        {cert.credentialUrl && (
+                          <ExternalLink 
+                            className="ml-2 text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" 
+                            size={16} 
+                          />
+                        )}
                       </h3>
                       {cert.code && (
                         <span className="ml-3 text-xs px-3 py-1 bg-cyan-400/20 text-cyan-300 rounded border border-cyan-400/30 font-mono certificate-code">

@@ -42,9 +42,7 @@ const About = ({ skills }) => {
                 />
                 Specialized in backend engineering with expertise in
                 PHP/Laravel, MongoDB, and microservices architecture.
-                Previously designed dynamic fee systems and integrated payment
-                solutions at Gathern, serving thousands of users with
-                optimized database queries and RESTful APIs.
+                Proficient in frontend technologies including React, and Angular
               </p>
             </div>
             <div
@@ -56,8 +54,7 @@ const About = ({ skills }) => {
                   className="mr-3 mt-1 text-cyan-400 flex-shrink-0"
                   size={20}
                 />
-                Certified in cybersecurity with eJPT (Junior Penetration
-                Tester) and eWPt (Web Penetration Tester) and JavaScript
+                Certified in cybersecurity with eJPT and eWPt and JavaScript
                 programming credentials. Passionate about red teaming,
                 security assessment, and building secure, scalable
                 applications that protect user data and ensure system

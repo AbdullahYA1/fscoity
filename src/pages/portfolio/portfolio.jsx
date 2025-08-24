@@ -192,7 +192,7 @@ const Portfolio = () => {
 
     if (element) {
       // Calculate the offset to show the entire section including title
-      const navbarHeight = 80; // Account for navbar height
+      const navbarHeight = 50; // Account for navbar height
       const extraPadding = 40; // Extra padding to ensure title is fully visible
       const totalOffset = navbarHeight + extraPadding;
       const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;

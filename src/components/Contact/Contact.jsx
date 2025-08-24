@@ -40,30 +40,15 @@ const Contact = () => {
       className="min-h-screen flex items-center py-20 pt-48 relative z-10 animate-on-scroll"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          <div className="space-y-8">
-            <h2 className="text-3xl md:text-6xl font-bold text-green-300 relative animate-slide-left">
-              &gt; LINKS
-              <div className="absolute -inset-4 bg-gradient-to-r from-green-400/10 to-cyan-400/10 blur-xl animate-pulse" />
-            </h2>
-
-            <div className="space-y-6 text-lg">
-              <p
-                className="p-6 border border-green-400/30 bg-green-400/5 backdrop-blur-sm transform hover:scale-105 transition-all duration-500 animate-fade-up"
-                style={{ animationDelay: "0.2s" }}
-              >
-                Ready to build the impossible? Let's connect across the
-                digital dimensions and architect experiences that transcend
-                reality.
-              </p>
-              <p
-                className="p-6 border border-cyan-400/30 bg-cyan-400/5 backdrop-blur-sm transform hover:scale-105 transition-all duration-500 animate-fade-up"
-                style={{ animationDelay: "0.4s" }}
-              >
-                In a world where threats evolve every second, security isn't just code—it's a mindset. Let's build systems that don't just defend, but anticipate.
-              </p>
-            </div>
-
+        <div className="space-y-12">
+          {/* Main Title - Top Left */}
+          <h2 className="text-3xl md:text-6xl font-bold text-green-300 relative animate-slide-left">
+            &gt; LINKS
+            <div className="absolute -inset-4 bg-gradient-to-r from-green-400/10 to-cyan-400/10 blur-xl animate-pulse" />
+          </h2>
+          
+          {/* Content Grid - Links and Form Inline */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div className="space-y-4">
               {contactLinks.map((contact, index) => (
                 <a
@@ -84,9 +69,8 @@ const Contact = () => {
                 </a>
               ))}
             </div>
-          </div>
 
-          <div className="border border-green-400/30 bg-black/50 backdrop-blur-sm p-8 relative overflow-hidden transform hover:scale-105 transition-all duration-500 contact-form-container">
+            <div className="border border-green-400/30 bg-black/50 backdrop-blur-sm p-8 relative overflow-hidden transform hover:scale-105 transition-all duration-500 contact-form-container">
             <div className="absolute inset-0 bg-gradient-to-br from-green-400/5 to-cyan-400/5 animate-pulse" />
 
             {/* Digital rain effect */}
@@ -139,6 +123,7 @@ const Contact = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-green-300 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </button>
             </form>
+            </div>
           </div>
         </div>
       </div>
