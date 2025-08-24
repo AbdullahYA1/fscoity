@@ -61,6 +61,12 @@
 }
 
 .animate-fade-up {
-  animation: animate-fade-up 0.8s ease-out forwards;
   opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.animate-fade-up.animate-in {
+  opacity: 1;
+  transform: translateY(0);
 }

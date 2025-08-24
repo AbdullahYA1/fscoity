@@ -15,19 +15,19 @@ const Certificates = ({ certificates }) => {
       className="py-0 pt-48 mt-0 relative z-10 animate-on-scroll"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-6xl font-bold text-green-300 relative animate-slide-right mb-6 mt-4 text-center transform hover:scale-105 transition-all duration-500 cursor-default">
+        <h2 className="text-3xl md:text-6xl font-bold text-green-300 relative animate-slide-right mb-16 text-center transform hover:scale-105 transition-all duration-500 cursor-default">
           &gt; Certifications
           <div className="absolute -inset-4 bg-gradient-to-r from-cyan-400/10 to-green-400/10 blur-xl animate-pulse" />
         </h2>
 
-        <div className="max-w-4xl mx-auto space-y-6">
+        <div className="max-w-4xl mx-auto space-y-8">
           {certificates.map((cert, index) => (
             <div
               key={index}
               className={`group relative backdrop-blur-sm p-6 animate-fade-up certificate-card ${
                 cert.credentialUrl ? 'cursor-pointer' : ''
               }`}
-              style={{ animationDelay: `${index * 0.2}s` }}
+              style={{ animationDelay: `${index * 0.3}s` }}
               onClick={() => handleCertificateClick(cert.credentialUrl)}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/10 via-transparent to-green-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -39,7 +39,7 @@ const Certificates = ({ certificates }) => {
                     size={24}
                   />
                   <div className="flex-1">
-                    <div className="flex items-center mb-2">
+                    <div className="flex flex-wrap items-start justify-between mb-2">
                       <h3 className="text-xl font-bold text-cyan-300 group-hover:text-cyan-200 transition-colors duration-500 flex items-center">
                         {cert.title}
                         {cert.credentialUrl && (
@@ -50,7 +50,7 @@ const Certificates = ({ certificates }) => {
                         )}
                       </h3>
                       {cert.code && (
-                        <span className="ml-3 text-xs px-3 py-1 bg-cyan-400/20 text-cyan-300 rounded border border-cyan-400/30 font-mono certificate-code">
+                        <span className="text-xs px-3 py-1 bg-cyan-400/20 text-cyan-300 rounded border border-cyan-400/30 font-mono certificate-code mt-1 sm:mt-0">
                           {cert.code}
                         </span>
                       )}

@@ -2,16 +2,34 @@
   position: relative;
   overflow: hidden;
   transition: all 0.7s ease;
-  transform: scale(1);
+  transform: translateY(30px) scale(1);
+  opacity: 0;
   border: 1px solid rgba(0, 188, 212, 0.3);
   background: rgba(0, 188, 212, 0.05);
 }
 
+.certificate-card.animate-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
 .certificate-card:hover {
-  transform: scale(1.05);
+  transform: translateY(0) scale(1.05);
   box-shadow: 0 15px 35px rgba(0, 188, 212, 0.25);
   border-color: rgba(0, 188, 212, 0.5);
   background: rgba(0, 188, 212, 0.1);
+}
+
+/* Add fade-up animation styles */
+.animate-fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.animate-fade-up.animate-in {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .certificate-card::before {

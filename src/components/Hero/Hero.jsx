@@ -59,12 +59,17 @@ const Hero = ({ isLoaded, scrollToSection }) => {
 
       {/* 3D Rotating Robot Face */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 pt-5 sm:pt-0">
-        <div className="relative w-32 h-32 md:w-40 md:h-40">
+        <div
+          className={`relative w-32 h-32 md:w-40 md:h-40 transition-all duration-1000 ${
+            isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
+          style={{ animationDelay: "2.2s" }}
+        >
           <div
             className="w-full h-full relative preserve-3d animate-spin-3d"
             style={{
               transformStyle: "preserve-3d",
-              animation: "rotate3D 10s linear infinite",
+              animation: "rotate3D 10s linear infinite 2.5s",
             }}
           >
             <img
@@ -102,8 +107,14 @@ const Hero = ({ isLoaded, scrollToSection }) => {
           </div>
 
           {/* Glowing ring effect */}
-          <div className="absolute inset-0 rounded-full border-2 border-green-400/20 animate-pulse scale-110"></div>
-          <div className="absolute inset-0 rounded-full border-2 border-cyan-400/20 animate-pulse scale-125 animation-delay-1000"></div>
+          <div 
+            className="absolute inset-0 rounded-full border-2 border-green-400/20 animate-pulse scale-110"
+            style={{ animationDelay: "2.5s" }}
+          ></div>
+          <div 
+            className="absolute inset-0 rounded-full border-2 border-cyan-400/20 animate-pulse scale-125"
+            style={{ animationDelay: "2.7s" }}
+          ></div>
         </div>
       </div>
     </section>

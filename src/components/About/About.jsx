@@ -2,7 +2,7 @@ import React from 'react';
 import { User, Code, Shield } from 'lucide-react';
 import './About.css';
 
-const About = ({ skills }) => {
+const About = () => {
   return (
     <section
       id="about"
@@ -61,41 +61,6 @@ const About = ({ skills }) => {
                 integrity.
               </p>
             </div>
-          </div>
-        </div>
-
-        {/* Skills Section */}
-        <div id="skills" className="max-w-4xl mx-auto skills-section">
-          <h3 className="text-2xl md:text-4xl font-bold text-green-300 mb-12 text-center relative animate-slide-right transform hover:scale-105 transition-all duration-500 cursor-default">
-            &gt; SKILLS_MATRIX
-            <div className="absolute -inset-2 bg-gradient-to-r from-green-400/10 to-cyan-400/10 blur-lg animate-pulse" />
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {skills.map((skill, index) => (
-              <div
-                key={skill.name}
-                className="space-y-3 group skill-bar-animated transform hover:scale-105 transition-all duration-500 p-4 rounded border border-transparent hover:border-green-400/30 hover:bg-green-400/5"
-                style={{ animationDelay: `${index * 0.15}s` }}
-              >
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-semibold group-hover:text-green-300 transition-colors duration-300">{skill.name}</span>
-                  <span className="text-green-300 font-bold skill-percentage">
-                    {skill.level}%
-                  </span>
-                </div>
-                <div className="relative h-6 bg-gray-900 border border-green-400/30 overflow-hidden rounded group-hover:border-green-400/50 transition-all duration-300">
-                  <div
-                    className={`skill-progress h-full bg-gradient-to-r ${skill.color} relative`}
-                    style={{ "--skill-width": `${skill.level}%` }}
-                    data-width={skill.level}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-300/30 to-transparent animate-pulse" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-green-400/20 to-transparent skill-glow opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-300/10 to-transparent opacity-0 skill-shine group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </div>

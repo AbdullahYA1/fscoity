@@ -145,7 +145,7 @@ export const educationData = [
     title: "Bachelor's degree in Computer Science",
     institution: "Imam Abdulrahman Bin Faisal University",
     location: "Dammam, Saudi Arabia",
-    period: "2019",
+    period: "2019-2024",
     description: "Specialized with a focus on web development, software engineering, and database systems",
   },
 ];
@@ -168,7 +168,7 @@ export const certificatesData = [
     credentialUrl: "https://certs.ine.com/31f2e165-44bf-446c-8ec0-c7c20b7d3d42#acc.yurqzgtA",
   },
   {
-    title: "eWPT - eLearnSecurity Web Application Penetration Tester",
+    title: "eWPT - eLearnSecurity Web app Penetration Tester",
     code: "INE - eWPT",
     issuer: "INE Security",
     date: "08/2025",
