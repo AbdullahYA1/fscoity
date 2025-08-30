@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Github, Linkedin } from 'lucide-react';
+import { toast } from 'react-toastify';
 import './Contact.css';
 
 // Custom X (Twitter) Icon Component
@@ -16,39 +17,22 @@ const XIcon = ({ className, size = 24 }) => (
   </svg>
 );
 
-// Simple client-side rate limiter (per browser)
-const RATE_LIMIT_COUNT = 3; // max submissions
-const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // per 1 hour
-const STORAGE_KEY = 'contact_submissions_v1';
-
-const now = () => Date.now();
-const loadHistory = () => {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-};
-const saveHistory = (arr) => {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); } catch {}
-};
-const pruneHistory = (arr) => arr.filter((t) => now() - t < RATE_LIMIT_WINDOW_MS);
-const canSubmit = () => {
-  const pruned = pruneHistory(loadHistory());
-  const remaining = RATE_LIMIT_COUNT - pruned.length;
-  if (remaining > 0) return { ok: true, remaining };
-  const nextAllowedIn = RATE_LIMIT_WINDOW_MS - (now() - Math.min(...pruned));
-  return { ok: false, nextAllowedIn };
-};
-const recordSubmit = () => {
-  const pruned = pruneHistory(loadHistory());
-  pruned.push(now());
-  saveHistory(pruned);
-};
+// Client-side rate limiting removed (handled by backend)
 
 const Contact = () => {
   const [sending, setSending] = useState(false);
+  const notify = () =>
+    toast.success('Message sent successfully.', {
+      position: 'top-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: 'dark',
+      style: { background: '#001100', color: '#00ff41', border: '1px solid #00ff41' },
+      progressStyle: { background: '#00ff41' },
+    });
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -60,20 +44,13 @@ const Contact = () => {
     const honeypot = e.target.querySelector('input[name="website"]')?.value;
     if (honeypot) return; // silently drop
 
-    // Rate limit check
-    const rl = canSubmit();
-    if (!rl.ok) {
-      const secs = Math.ceil(rl.nextAllowedIn / 1000);
-      const mins = Math.floor(secs / 60);
-      const rem = secs % 60;
-      alert(`Rate limit reached. Try again in ${mins}m ${rem}s.`);
-      return;
-    }
+  // Rate limiting handled by backend; no frontend checks
 
     const formData = new FormData(e.target);
     const payload = {
       name: formData.get('name'),
       email: formData.get('email'),
+      subject: formData.get('subject') || '',
       message: formData.get('message'),
       meta: {
         ua: navigator.userAgent,
@@ -81,8 +58,13 @@ const Contact = () => {
       }
     };
 
-    const endpoint = import.meta?.env?.VITE_CONTACT_ENDPOINT;
-    const headers = { 'Content-Type': 'application/json' };
+    // Prefer configured endpoint; fallback to common Laravel route
+  const endpoint = import.meta?.env?.VITE_CONTACT_ENDPOINT || 'http://localhost:8000/api/contact';
+    const headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest',
+    };
 
     setSending(true);
     try {
@@ -90,15 +72,43 @@ const Contact = () => {
         const res = await fetch(endpoint, {
           method: 'POST',
           headers,
+          credentials: 'include',
           body: JSON.stringify(payload),
         });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        if (!res.ok) {
+          if (res.status === 429) {
+            const retryAfter = res.headers.get('Retry-After');
+            const secs = retryAfter ? parseInt(retryAfter, 10) : null;
+            if (!Number.isNaN(secs) && secs) {
+              const mins = Math.floor(secs / 60);
+              const rem = secs % 60;
+              alert(`Too many messages. Try again in ${mins}m ${rem}s.`);
+            } else {
+              alert('Too many messages. Please try again later.');
+            }
+            return;
+          }
+          if (res.status === 422) {
+            try {
+              const data = await res.json();
+              const firstError = data?.errors && Object.values(data.errors)[0]?.[0];
+              alert(firstError || 'Validation failed. Please check your inputs.');
+            } catch {
+              alert('Validation failed. Please check your inputs.');
+            }
+            return;
+          }
+          if (res.status === 419) {
+            alert('Session/CSRF mismatch. If this route is in web.php, include a CSRF token or use an API route.');
+            return;
+          }
+          throw new Error(`HTTP ${res.status}`);
+        }
       } else {
         // No endpoint configured; log for devs
         console.warn('No VITE_CONTACT_ENDPOINT configured. Message not sent to a server.');
       }
-      recordSubmit();
-      alert("Thank you for your message! I'll get back to you soon.");
+  notify();
       e.target.reset();
     } catch (err) {
       console.error('Contact submit failed:', err);
@@ -136,7 +146,7 @@ const Contact = () => {
       id="contact"
       className="min-h-screen flex items-center py-20 pt-48 relative z-10 animate-on-scroll"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-12">
           {/* Main Title - Top Left */}
           <h2 className="text-3xl md:text-6xl font-bold text-green-300 relative animate-slide-left">
@@ -205,6 +215,12 @@ const Contact = () => {
                 name="email"
                 placeholder="Your Email"
                 required
+                className="contact-input w-full bg-transparent border border-green-400/30 p-4 text-green-400 placeholder-green-400/50 focus:border-green-400 focus:outline-none transition-all duration-500 focus:shadow-lg focus:shadow-green-400/20 transform focus:scale-105"
+              />
+              <input
+                type="text"
+                name="subject"
+                placeholder="Subject (optional)"
                 className="contact-input w-full bg-transparent border border-green-400/30 p-4 text-green-400 placeholder-green-400/50 focus:border-green-400 focus:outline-none transition-all duration-500 focus:shadow-lg focus:shadow-green-400/20 transform focus:scale-105"
               />
               <textarea
