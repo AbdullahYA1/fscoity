@@ -21,6 +21,60 @@ const Home = () => {
   const hiddenInputRef = useRef(null);
   const now = new Date().toString();
   const formattedDate = now.replace(/\s\(.*\)$/, "");
+  // Determine mobile layout once (on first render)
+  const isMobile = useMemo(() => window.innerWidth < 768, []);
+
+  // Panel variants for responsiveness
+  const breachPanel = isMobile
+    ? [
+        " ╔══════════════════════════════╗",
+        " ║   BREACH DETECTED            ║",
+        " ║   ACCESS GRANTED             ║",
+        " ║   INIT: LEVEL 1              ║",
+        " ╚══════════════════════════════╝",
+      ]
+    : [
+        " ╔══════════════════════════════════════════════╗",
+        " ║          SYSTEM BREACH DETECTED              ║",
+        " ║         TERMINAL ACCESS GRANTED              ║",
+        " ║           INITIALIZE: LEVEL 1                ║",
+        " ╚══════════════════════════════════════════════╝",
+      ];
+
+  const userInfoBox = isMobile
+    ? [
+        "┌───────────────────────────────┐",
+        "│ User: A. Yousef               │",
+        "│ Role: Full Stack / Backend    │",
+        "│ Location: Riyadh, KSA         │",
+        "│ Status: Available             │",
+        "│ Security: root                │",
+        "└───────────────────────────────┘",
+      ]
+    : [
+        "┌─────────────────────────────────────────────────────────────┐",
+        "│ User: Abdullah Yousef                                       │",
+        "│ Role: Full Stack Developer | Backend Engineer               │",
+        "│ Location: Riyadh, Saudi Arabia                              │",
+        "│ Status: Available for opportunities                         │",
+        "│ Security Level: root                                        │",
+        "└─────────────────────────────────────────────────────────────┘",
+      ];
+
+  const adminAccessPanel = isMobile
+    ? [
+        "╔══════════════════════════════╗",
+        "║   ADMIN ACCESS GRANTED       ║",
+        "║   Welcome to ASOCEITY        ║",
+        "╚══════════════════════════════╝",
+      ]
+    : [
+        "╔══════════════════════════════════════════════════════════════╗",
+        "║                    ADMIN ACCESS GRANTED                      ║",
+        "║                  Welcome to ASOCEITY System                  ║",
+        "╚══════════════════════════════════════════════════════════════╝",
+      ];
+
   // Enhanced intro sequence with better ASCII
   const introLines = useMemo(
     () => [
@@ -38,11 +92,7 @@ const Home = () => {
       "Initializing secure connection...",
       "Establishing encrypted tunnel...",
       "Connection established.",
-      " ╔══════════════════════════════════════════════╗",
-      " ║          SYSTEM BREACH DETECTED              ║",
-      " ║         TERMINAL ACCESS GRANTED              ║",
-      " ║           INITIALIZE: LEVEL 1                ║",
-      " ╚══════════════════════════════════════════════╝",
+      ...breachPanel,
       "",
       "[INFO] Scanning system architecture...",
       "[INFO] Bypassing security protocols...",
@@ -54,13 +104,7 @@ const Home = () => {
       "                    WELCOME TO ASOCEITY TERMINAL",
       "════════════════════════════════════════════════════════════════",
       "",
-      "┌─────────────────────────────────────────────────────────────┐",
-      "│ User: Abdullah Yousef                                       │",
-      "│ Role: Full Stack Developer | Backend Engineer               │",
-      "│ Location: Riyadh, Saudi Arabia                              │",
-      "│ Status: Available for opportunities                         │",
-      "│ Security Level: root                                        │",
-      "└─────────────────────────────────────────────────────────────┘",
+      ...userInfoBox,
       "",
       "WARNING: Unauthorized access detected from your IP",
       "Limited privileges granted for security purposes",
@@ -68,7 +112,7 @@ const Home = () => {
       `Last login: ${formattedDate}`,
       "Type 'sudo cv' to explore My hacking Portfolio",
     ],
-    [formattedDate]
+    [formattedDate, breachPanel, userInfoBox, isMobile]
   );
 
   const commands = useMemo(
@@ -81,10 +125,7 @@ const Home = () => {
           " Verifying portfolio credentials...",
           " Authentication successful",
           " Escalating privileges...",
-          "╔══════════════════════════════════════════════════════════════╗",
-          "║                    ADMIN ACCESS GRANTED                      ║",
-          "║                  Welcome to ASOCEITY System                  ║",
-          "╚══════════════════════════════════════════════════════════════╝",
+          ...adminAccessPanel,
           "",
           " System access privileges elevated.",
           " You now have full control over the ASOCEITY system.",
@@ -97,7 +138,7 @@ const Home = () => {
         action: "clear",
       },
     }),
-    []
+    [adminAccessPanel]
   );
 
   // Typing effect for intro
