@@ -2,7 +2,26 @@ import React from 'react';
 import { MapPin, Calendar } from 'lucide-react';
 import './Experience.css';
 
-const Experience = ({ experiences }) => {
+const Experience = ({ experiences = [] }) => {
+  // Show loading state if experiences array is empty
+  if (!experiences || experiences.length === 0) {
+    return (
+      <section
+        id="experience"
+        className="min-h-screen py-20 pt-48 relative z-10 animate-on-scroll"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-6xl font-bold text-green-300 relative animate-slide-left mb-16 text-center transform hover:scale-105 transition-all duration-500 cursor-default">
+            &gt; Experience
+            <div className="absolute -inset-4 bg-gradient-to-r from-green-400/10 to-cyan-400/10 blur-xl animate-pulse" />
+          </h2>
+          <div className="text-center text-green-400">
+            <div className="animate-pulse">Loading experience...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
   return (
     <section
       id="experience"

@@ -2,7 +2,26 @@ import React from 'react';
 import { GraduationCap, MapPin, Calendar, User, Terminal, Code } from 'lucide-react';
 import './Education.css';
 
-const Education = ({ education }) => {
+const Education = ({ education = [] }) => {
+  // Show loading state if education array is empty
+  if (!education || education.length === 0) {
+    return (
+      <section
+        id="education"
+        className="min-h-screen py-20 pt-48 relative z-10 animate-on-scroll"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-6xl font-bold text-green-300 relative animate-slide-left mb-16 text-center transform hover:scale-105 transition-all duration-500 cursor-default">
+            &gt; Education
+            <div className="absolute -inset-4 bg-gradient-to-r from-green-400/10 to-cyan-400/10 blur-xl animate-pulse" />
+          </h2>
+          <div className="text-center text-green-400">
+            <div className="animate-pulse">Loading education...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
   return (
     <section
       id="education"
@@ -10,7 +29,7 @@ const Education = ({ education }) => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl md:text-6xl font-bold text-green-300 relative animate-slide-left mb-16 text-center transform hover:scale-105 transition-all duration-500 cursor-default">
-          &gt; ACADEMIC
+          &gt; Education
           <div className="absolute -inset-4 bg-gradient-to-r from-green-400/10 to-cyan-400/10 blur-xl animate-pulse" />
         </h2>
 

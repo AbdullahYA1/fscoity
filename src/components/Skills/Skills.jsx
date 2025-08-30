@@ -1,7 +1,28 @@
 import React from 'react';
 import './Skills.css';
 
-const Skills = ({ skills }) => {
+const Skills = ({ skills = [] }) => {
+  // Show loading state if skills array is empty
+  if (!skills || skills.length === 0) {
+    return (
+      <section
+        id="skills"
+        className="min-h-screen py-20 pt-48 relative z-10 animate-on-scroll"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto skills-section">
+            <h2 className="text-3xl md:text-6xl font-bold text-green-300 relative animate-slide-left mb-12 text-center transform hover:scale-105 transition-all duration-500 cursor-default">
+              &gt; SKILLS
+              <div className="absolute -inset-4 bg-gradient-to-r from-green-400/10 to-transparent blur-xl animate-pulse" />
+            </h2>
+            <div className="text-center text-green-400">
+              <div className="animate-pulse">Loading skills...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
   return (
     <section
       id="skills"

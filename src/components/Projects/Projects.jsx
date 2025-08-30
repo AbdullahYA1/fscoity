@@ -2,7 +2,26 @@ import React from 'react';
 import { Github, ExternalLink } from 'lucide-react';
 import './Projects.css';
 
-const Projects = ({ projects }) => {
+const Projects = ({ projects = [] }) => {
+  // Show loading state if projects array is empty
+  if (!projects || projects.length === 0) {
+    return (
+      <section
+        id="projects"
+        className="min-h-screen py-20 pt-48 relative z-10 animate-on-scroll"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-6xl font-bold mb-16 text-center text-green-300 relative transform hover:scale-105 transition-all duration-500 cursor-default">
+            &gt; PROJECTS
+            <div className="absolute inset-0 bg-gradient-to-r from-green-400/10 to-cyan-400/10 blur-2xl animate-pulse" />
+          </h2>
+          <div className="text-center text-green-400">
+            <div className="animate-pulse">Loading projects...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
   return (
     <section
       id="projects"
@@ -45,16 +64,6 @@ const Projects = ({ projects }) => {
                       {tech}
                     </span>
                   ))}
-                </div>
-
-                <div className="flex space-x-6">
-                  <a
-                    href={project.github}
-                    className="flex items-center text-green-400 hover:text-green-300 transition-all duration-500 group-hover:animate-pulse transform hover:scale-110"
-                  >
-                    <Github size={18} className="mr-2" />
-                    REPO
-                  </a>
                 </div>
               </div>
 

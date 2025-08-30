@@ -2,12 +2,32 @@ import React from 'react';
 import { Award, Calendar, ExternalLink } from 'lucide-react';
 import './Certificates.css';
 
-const Certificates = ({ certificates }) => {
-  const handleCertificateClick = (credentialUrl) => {
-    if (credentialUrl) {
-      window.open(credentialUrl, '_blank', 'noopener,noreferrer');
+const Certificates = ({ certificates = [] }) => {
+  const handleCertificateClick = (verification_url) => {
+    if (verification_url) {
+      window.open(verification_url, '_blank', 'noopener,noreferrer');
     }
   };
+
+  // Show loading state if certificates array is empty
+  if (!certificates || certificates.length === 0) {
+    return (
+      <section
+        id="certificates"
+        className="py-0 pt-48 mt-0 relative z-10 animate-on-scroll"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-6xl font-bold text-green-300 relative animate-slide-right mb-16 text-center transform hover:scale-105 transition-all duration-500 cursor-default">
+            &gt; Certificates
+            <div className="absolute -inset-4 bg-gradient-to-r from-cyan-400/10 to-green-400/10 blur-xl animate-pulse" />
+          </h2>
+          <div className="text-center text-green-400">
+            <div className="animate-pulse">Loading certificates...</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -16,7 +36,7 @@ const Certificates = ({ certificates }) => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl md:text-6xl font-bold text-green-300 relative animate-slide-right mb-16 text-center transform hover:scale-105 transition-all duration-500 cursor-default">
-          &gt; Certifications
+          &gt; Certificates
           <div className="absolute -inset-4 bg-gradient-to-r from-cyan-400/10 to-green-400/10 blur-xl animate-pulse" />
         </h2>
 
@@ -25,10 +45,10 @@ const Certificates = ({ certificates }) => {
             <div
               key={index}
               className={`group relative backdrop-blur-sm p-6 animate-fade-up certificate-card ${
-                cert.credentialUrl ? 'cursor-pointer' : ''
+                cert.verification_url ? 'cursor-pointer' : ''
               }`}
               style={{ animationDelay: `${index * 0.3}s` }}
-              onClick={() => handleCertificateClick(cert.credentialUrl)}
+              onClick={() => handleCertificateClick(cert.verification_url)}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/10 via-transparent to-green-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
@@ -42,7 +62,7 @@ const Certificates = ({ certificates }) => {
                     <div className="flex flex-wrap items-start justify-between mb-2">
                       <h3 className="text-xl font-bold text-cyan-300 group-hover:text-cyan-200 transition-colors duration-500 flex items-center">
                         {cert.title}
-                        {cert.credentialUrl && (
+                        {cert.verification_url && (
                           <ExternalLink 
                             className="ml-2 text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" 
                             size={16} 

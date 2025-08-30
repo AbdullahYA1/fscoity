@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Mail, Github, Linkedin } from 'lucide-react';
 import './Contact.css';
 
@@ -16,18 +16,96 @@ const XIcon = ({ className, size = 24 }) => (
   </svg>
 );
 
+// Simple client-side rate limiter (per browser)
+const RATE_LIMIT_COUNT = 3; // max submissions
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // per 1 hour
+const STORAGE_KEY = 'contact_submissions_v1';
+
+const now = () => Date.now();
+const loadHistory = () => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+};
+const saveHistory = (arr) => {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); } catch {}
+};
+const pruneHistory = (arr) => arr.filter((t) => now() - t < RATE_LIMIT_WINDOW_MS);
+const canSubmit = () => {
+  const pruned = pruneHistory(loadHistory());
+  const remaining = RATE_LIMIT_COUNT - pruned.length;
+  if (remaining > 0) return { ok: true, remaining };
+  const nextAllowedIn = RATE_LIMIT_WINDOW_MS - (now() - Math.min(...pruned));
+  return { ok: false, nextAllowedIn };
+};
+const recordSubmit = () => {
+  const pruned = pruneHistory(loadHistory());
+  pruned.push(now());
+  saveHistory(pruned);
+};
+
 const Contact = () => {
-  const handleFormSubmit = (e) => {
+  const [sending, setSending] = useState(false);
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     const btn = e.target.querySelector('button[type="submit"]');
     btn.style.animation = "shake 0.5s ease-in-out";
     setTimeout(() => (btn.style.animation = ""), 500);
 
-    // More user-friendly message
-    alert("Thank you for your message! I'll get back to you soon.");
+    // Honeypot to deter bots
+    const honeypot = e.target.querySelector('input[name="website"]')?.value;
+    if (honeypot) return; // silently drop
 
-    // Clear the form
-    e.target.reset();
+    // Rate limit check
+    const rl = canSubmit();
+    if (!rl.ok) {
+      const secs = Math.ceil(rl.nextAllowedIn / 1000);
+      const mins = Math.floor(secs / 60);
+      const rem = secs % 60;
+      alert(`Rate limit reached. Try again in ${mins}m ${rem}s.`);
+      return;
+    }
+
+    const formData = new FormData(e.target);
+    const payload = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      message: formData.get('message'),
+      meta: {
+        ua: navigator.userAgent,
+        sentAt: new Date().toISOString(),
+      }
+    };
+
+    const endpoint = import.meta?.env?.VITE_CONTACT_ENDPOINT;
+    const headers = { 'Content-Type': 'application/json' };
+
+    setSending(true);
+    try {
+      if (endpoint) {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      } else {
+        // No endpoint configured; log for devs
+        console.warn('No VITE_CONTACT_ENDPOINT configured. Message not sent to a server.');
+      }
+      recordSubmit();
+      alert("Thank you for your message! I'll get back to you soon.");
+      e.target.reset();
+    } catch (err) {
+      console.error('Contact submit failed:', err);
+      alert('Failed to send. Please try again later.');
+    } finally {
+      setSending(false);
+    }
   };
 
   const contactLinks = [
@@ -113,6 +191,8 @@ const Contact = () => {
               GET IN TOUCH
             </h3>
             <form className="space-y-6 relative z-10" onSubmit={handleFormSubmit}>
+              {/* Honeypot field (should remain empty) */}
+              <input type="text" name="website" tabIndex="-1" autoComplete="off" className="hidden" aria-hidden="true" />
               <input
                 type="text"
                 name="name"
@@ -136,9 +216,10 @@ const Contact = () => {
               />
               <button
                 type="submit"
-                className="contact-submit w-full bg-green-400 text-black py-4 hover:bg-green-300 transition-all duration-500 font-bold tracking-wider relative overflow-hidden group transform hover:scale-105"
+                disabled={sending}
+                className={`contact-submit w-full ${sending ? 'bg-green-300/60 cursor-not-allowed' : 'bg-green-400 hover:bg-green-300'} text-black py-4 transition-all duration-500 font-bold tracking-wider relative overflow-hidden group transform hover:scale-105`}
               >
-                <span className="relative z-10">SEND MESSAGE</span>
+                <span className="relative z-10">{sending ? 'SENDING…' : 'SEND MESSAGE'}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-green-300 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </button>
             </form>

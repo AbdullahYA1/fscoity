@@ -17,11 +17,11 @@ import GridOverlay from "../../components/GridOverlay/GridOverlay";
 
 // Data
 import {
-  projectsData,
-  skillsData,
-  experiencesData,
-  educationData,
-  certificatesData,
+  fetchProjectsData,
+  fetchSkillsData,
+  fetchExperiencesData,
+  fetchEducationData,
+  fetchCertificatesData,
 } from "./portfolioData.jsx";
 import "./portfolio.css";
 
@@ -31,6 +31,17 @@ const Portfolio = () => {
   const [glitchActive, setGlitchActive] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Data state
+  const [projectsData, setProjectsData] = useState([]);
+  const [skillsData, setSkillsData] = useState([]);
+  const [experiencesData, setExperiencesData] = useState([]);
+  const [educationData, setEducationData] = useState([]);
+  const [certificatesData, setCertificatesData] = useState([]);
+  
+  // Loading states
+  const [dataLoading, setDataLoading] = useState(true);
+  const [dataError, setDataError] = useState(null);
 
   const sections = [
     "home",
@@ -61,6 +72,7 @@ const Portfolio = () => {
   }, []);
 
   // Scroll animations with Intersection Observer
+  // Re-run when dynamic data finishes loading so newly inserted nodes get observed
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -162,7 +174,14 @@ const Portfolio = () => {
       window.removeEventListener("scroll", handleScroll);
       cleanup();
     };
-  }, []);
+  }, [
+    dataLoading,
+    projectsData.length,
+    skillsData.length,
+    experiencesData.length,
+    educationData.length,
+    certificatesData.length,
+  ]);
 
   // Glitch effect
   useEffect(() => {
@@ -197,16 +216,56 @@ const Portfolio = () => {
     return () => document.removeEventListener("keydown", handleEscape);
   }, []);
 
+  // Fetch data from API
+  useEffect(() => {
+    const fetchAllData = async () => {
+      setDataLoading(true);
+      setDataError(null);
+
+      try {
+        // Fetch all data in parallel
+        const [projects, skills, experiences, education, certificates] = await Promise.all([
+          fetchProjectsData(),
+          fetchSkillsData(),
+          fetchExperiencesData(),
+          fetchEducationData(),
+          fetchCertificatesData(),
+        ]);
+
+        // Update state with fetched data
+        setProjectsData(projects);
+        setSkillsData(skills);
+        setExperiencesData(experiences);
+        setEducationData(education);
+        setCertificatesData(certificates);
+      } catch (error) {
+        console.error("Error fetching portfolio data:", error);
+        setDataError("Failed to load portfolio data. Please try again later.");
+      } finally {
+        setDataLoading(false);
+      }
+    };
+
+    fetchAllData();
+  }, []);
+
   const scrollToSection = (index) => {
     setCurrentSection(index);
     const sectionId = sections[index];
     const element = document.getElementById(sectionId);
 
+    // Close mobile menu first so it doesn't overlay during scroll
+    if (mobileMenuOpen) setMobileMenuOpen(false);
+
     if (element) {
-      // Calculate the offset to show the entire section including title
-      const navbarHeight = 50; // Account for navbar height
-      const extraPadding = 40; // Extra padding to ensure title is fully visible
-      const totalOffset = navbarHeight + extraPadding;
+      // Measure actual navbar height
+      const nav = document.querySelector('nav');
+      const navHeight = nav ? nav.getBoundingClientRect().height : 64; // default h-16 = 64px
+
+      // Small extra padding to fully reveal section title
+      const extraPadding = window.innerWidth < 768 ? 24 : 40;
+      const totalOffset = navHeight + extraPadding;
+
       const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
       const offsetPosition = elementPosition - totalOffset;
 
@@ -215,8 +274,6 @@ const Portfolio = () => {
         behavior: "smooth"
       });
     }
-    
-    setMobileMenuOpen(false); // Close mobile menu when navigating
   };  const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -228,6 +285,25 @@ const Portfolio = () => {
 
   return (
     <div className="relative bg-black text-green-400 font-mono overflow-x-hidden">
+      {/* Show loading indicator while fetching data */}
+      {dataLoading && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+          <div className="hacker-loader">
+            <div className="hacker-ring" />
+            <div className="text-green-400/90 text-sm sm:text-base tracking-wider">
+              INITIALIZING<span className="hacker-caret" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Show error message if data fetch fails */}
+      {dataError && (
+        <div className="fixed top-4 right-4 bg-red-900 text-red-200 p-4 rounded z-50">
+          {dataError}
+        </div>
+      )}
+
       {/* 3D Canvas Background */}
       <ThreeJSBackground setIsLoaded={setIsLoaded} />
 
