@@ -58,8 +58,8 @@ const Contact = () => {
       }
     };
 
-    // Prefer configured endpoint; fallback to common Laravel route
-  const endpoint = import.meta?.env?.VITE_CONTACT_ENDPOINT || 'http://localhost:8000/api/contact';
+    // Prefer configured endpoint; fallback to development endpoint
+  const endpoint = import.meta.env.VITE_CONTACT_ENDPOINT || 'http://localhost:8000/api/contact';
     const headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',

@@ -344,7 +344,7 @@ const Home = () => {
             <div key={index} className="terminal-text-intro">
               {line}
               {index === currentLine && !isIntroComplete && showCursor && (
-                <span className="cursor-intro">█</span>
+                <span className="cursor-intro"></span>
               )}
             </div>
           ))}
@@ -379,7 +379,7 @@ const Home = () => {
               <div key={index} className="terminal-text-redirect">
                 {line}
                 {index === currentRedirectLine && showCursor && (
-                  <span className="cursor-intro">█</span>
+                  <span className="cursor-intro"></span>
                 )}
               </div>
             ))}
@@ -388,7 +388,7 @@ const Home = () => {
             <div className="command-line">
               <span className="command-prompt">root@asoceity:~$ </span>
               <span className="command-input-text">{userInput}</span>
-              {showCursor && <span className="terminal-cursor">█</span>}
+              {showCursor && <span className="terminal-cursor"></span>}
             </div>
           )}
         </div>

@@ -173,20 +173,22 @@
 /* Cursor */
 .terminal-cursor {
   display: inline-block;
-  width: 0.5rem;
-  height: 1rem;
+  width: 0.6rem;
+  height: 1.2rem;
   background-color: #4ade80;
-  margin-left: 0;
+  margin-left: 2px;
   animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  vertical-align: text-top;
 }
 
 .cursor-intro {
   display: inline-block;
-  width: 0.5rem;
-  height: 1rem;
+  width: 0.6rem;
+  height: 1.2rem;
   background-color: #4ade80;
-  margin-left: 0.25rem;
+  margin-left: 2px;
   animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  vertical-align: text-top;
 }
 
 /* Hidden Input */
@@ -307,8 +309,9 @@
 /* Cursor adjusts size with text */
 .terminal-cursor,
 .cursor-intro {
-  width: 0.4em;
-  height: 1em;
+  width: 0.6em;
+  height: 1.2em;
+  vertical-align: text-top;
 }
 
 /* Responsive breakpoints */
@@ -339,7 +342,8 @@
   }
   .terminal-cursor,
   .cursor-intro {
-    width: 0.3em;
-    height: 0.9em;
+    width: 0.5em;
+    height: 1em;
+    vertical-align: text-top;
   }
 }
